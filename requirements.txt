@@ -1,0 +1,7 @@
+boto3
+Django
+psycopg2-binary
+
+# for Development
+# factory-boy
+# pytest
