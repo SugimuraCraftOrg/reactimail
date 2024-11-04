@@ -1,7 +1,9 @@
-boto3
 Django
+Faker
 psycopg2-binary
 
 # for Development
+# black
 # factory-boy
 # pytest
+# pytest-django
