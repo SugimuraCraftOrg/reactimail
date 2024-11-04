@@ -3,8 +3,6 @@
 {% block content %}
 <h1>Tag: {{ object.name }}</h1>
 
-<p>Account: {{ object.account }}</p>
-
 <a href="{% url 'tag:list' %}">Back to Tag List</a> |
 <a href="{% url 'tag:edit' object.pk %}">Edit</a> |
 <a href="{% url 'tag:delete' object.pk %}">Delete</a>

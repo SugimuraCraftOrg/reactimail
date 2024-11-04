@@ -6,6 +6,11 @@
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
+    {% if form.non_field_errors %}
+        <div class="error">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
     <button type="submit">{% if object %}Update Tag{% else %}Create Tag{% endif %}</button>
 </form>
 

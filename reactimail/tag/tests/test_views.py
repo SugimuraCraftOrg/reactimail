@@ -1,5 +1,4 @@
 import pytest
-from django.core.cache import cache
 from django.urls import reverse
 
 from account.tests.factories import AccountFactory
@@ -27,6 +26,28 @@ class TestTagAdd:
         )  # Check for redirect after successful creation
         assert Tag.objects.count() == 1
         assert Tag.objects.first().name == "New Tag"
+
+    def test_failure_by_same_name(self, client):
+        """Should not add tag."""
+        from tag.models import Tag
+
+        account = AccountFactory()
+        TagFactory(account=account, name="Tag Name")
+
+        client.force_login(account)
+        response = client.post(
+            reverse("tag:add"),
+            {
+                "name": "Tag Name",
+            },
+        )
+
+        assert response.status_code == 200
+        assert (
+            "A tag with this name already exists for your account."
+            in response.content.decode()
+        )
+        assert Tag.objects.count() == 1
 
 
 @pytest.mark.django_db
@@ -67,6 +88,43 @@ class TestTagList:
 
 
 @pytest.mark.django_db
+class TestTagDetail:
+    def test_no_tags(self, client):
+        """Should not display data."""
+        from uuid import uuid4
+
+        account = AccountFactory()
+        dummy_id = uuid4()
+
+        client.force_login(account)
+        response = client.get(reverse("tag:detail", args=[dummy_id]))
+
+        assert response.status_code == 404
+
+    def test_display_tags(self, client):
+        """Should display data."""
+        account = AccountFactory()
+        tag = TagFactory(account=account)
+
+        client.force_login(account)
+        response = client.get(reverse("tag:detail", args=[tag.id]))
+
+        assert response.status_code == 200
+        assert tag.name in response.content.decode()
+
+    def test_does_not_display_other_users_tag(self, client):
+        """Should not display other's data."""
+        account = AccountFactory()
+        other_account = AccountFactory()
+        other_tag = TagFactory(account=other_account)
+
+        client.force_login(account)
+        response = client.get(reverse("tag:detail", args=[other_tag.id]))
+
+        assert response.status_code == 404
+
+
+@pytest.mark.django_db
 class TestTagUpdate:
     def test_update_own_tag(self, client):
         account = AccountFactory()
@@ -80,6 +138,17 @@ class TestTagUpdate:
         tag.refresh_from_db()
         assert response.status_code == 302
         assert tag.name == "Updated Tag Name"
+
+    def test_update_with_same_name(self, client):
+        account = AccountFactory()
+        tag = TagFactory(account=account, name="Tag Name")
+
+        client.force_login(account)
+        response = client.post(reverse("tag:edit", args=[tag.id]), {"name": "Tag Name"})
+
+        tag.refresh_from_db()
+        assert response.status_code == 302
+        assert tag.name == "Tag Name"
 
     def test_cannot_update_other_users_tag(self, client):
         account = AccountFactory()
