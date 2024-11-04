@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    <h2>Welcome to the Home Page</h2>
+    <p>You are logged in as {{ request.user.nickname }} &lt;{{ request.user.email }}&gt;</p>
+
+    <form action="{% url 'account:logout' %}" method="POST" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>

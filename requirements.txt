@@ -1,7 +1,11 @@
-boto3
 Django
+django-ratelimit
+Faker
 psycopg2-binary
 
 # for Development
+# black
 # factory-boy
+# freezegun
 # pytest
+# pytest-django
