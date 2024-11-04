@@ -68,8 +68,8 @@ class TestAuth:
         # Let fail up to one time before the limit.
         for _ in range(LOGIN_MAX_TIMES_PER_MINUTE - 1):
             response = client.post(url, login_data)
-            # assert response.status_code == 200
-            # assert "Email or password is incorrect" in response.content.decode()
+            assert response.status_code == 200
+            assert "Email or password is incorrect" in response.content.decode()
 
         # Success with a limited number of times.
         login_data["password"] = "testpassword"

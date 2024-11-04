@@ -19,3 +19,7 @@ docker compose up -d
 - postgres
 - redis
 - reactimail
+
+# For Development
+
+see: `reactimail/README.md`.
