@@ -14,13 +14,20 @@ class TagForm(forms.ModelForm):
         self.account = kwargs.pop("account", None)
         super().__init__(*args, **kwargs)
 
-    def clean_name(self):
+    def clean_name(self) -> str:
+        """
+        Validate that the tag name is unique for the account.
+
+        Returns:
+            str: The validated tag name
+        Raises:
+            ValidationError: If a tag with the same name exists for the account
+        """
         name = self.cleaned_data.get("name")
-        if (
-            Tag.objects.filter(account=self.account, name=name)
-            .exclude(pk=self.instance.id)
-            .exists()
-        ):
+        existing_tags = Tag.objects.filter(account=self.account, name=name)
+        if self.instance.id:
+            existing_tags = existing_tags.exclude(id=self.instance.id)
+        if existing_tags.exists():
             raise ValidationError(
                 "A tag with this name already exists for your account."
             )
