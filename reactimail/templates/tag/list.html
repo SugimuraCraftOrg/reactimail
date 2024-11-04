@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Your Tags</h1>
+<a href="{% url 'tag:add' %}">Add New Tag</a>
+
+<ul>
+    {% for tag in object_list %}
+        <li>
+            <a href="{% url 'tag:detail' tag.pk %}">{{ tag.name }}</a>
+            (<a href="{% url 'tag:edit' tag.pk %}">Edit</a> |
+            <a href="{% url 'tag:delete' tag.pk %}">Delete</a>)
+        </li>
+    {% empty %}
+        <p>No tags available.</p>
+    {% endfor %}
+</ul>
+
+{% endblock %}

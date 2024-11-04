@@ -5,8 +5,8 @@ from django.urls import reverse
 from .factories import AccountFactory
 
 
+@pytest.mark.django_db
 class TestAuth:
-    @pytest.mark.django_db
     def test_login_success(self, client):
         """Should login successfully and authenticate the user."""
         AccountFactory(email="testuser@example.com", password="testpassword")
@@ -24,7 +24,6 @@ class TestAuth:
         assert response.url == reverse("home:home")  # should be redirect to home.
         assert "_auth_user_id" in client.session  # verify user is authenticated.
 
-    @pytest.mark.django_db
     @pytest.mark.parametrize(
         "email, password, description",
         [
@@ -54,7 +53,6 @@ class TestAuth:
             "_auth_user_id" not in client.session
         )  # verify user is not authenticated.
 
-    @pytest.mark.django_db
     def test_login_success_within_number_of_attempts(self, client):
         """Should success within the number of attempts."""
         from account.constants import LOGIN_MAX_TIMES_PER_MINUTE
@@ -78,7 +76,6 @@ class TestAuth:
         assert response.status_code == 302
         assert response.url == reverse("home:home")
 
-    @pytest.mark.django_db
     def test_login_failure_with_over_attempts(self, client):
         """Should failure of more than the number of attempts."""
         from account.constants import LOGIN_MAX_TIMES_PER_MINUTE
@@ -100,7 +97,6 @@ class TestAuth:
         response = client.post(url, login_data)
         assert response.status_code == 403
 
-    @pytest.mark.django_db
     def test_session_expiry(self, client):
         from django.utils import timezone
         from freezegun import freeze_time

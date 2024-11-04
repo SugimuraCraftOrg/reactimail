@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Delete Tag</h1>
+
+<p>Are you sure you want to delete the tag "{{ object.name }}"?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, delete</button>
+    <a href="{% url 'tag:list' %}">Cancel</a>
+</form>
+
+{% endblock %}
