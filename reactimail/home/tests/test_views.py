@@ -1,14 +1,14 @@
 import pytest
 from django.urls import reverse
 
-from account.tests.factories import UserFactory
+from account.tests.factories import AccountFactory
 
 
 class TestHome:
     @pytest.mark.django_db
     def test_home_authenticated(self, client):
         """Should be displayed email when logged in."""
-        UserFactory(email="testuser@example.com", password="testpassword")
+        AccountFactory(email="testuser@example.com", password="testpassword")
 
         client.login(email="testuser@example.com", password="testpassword")
         response = client.get(reverse("home:home"))

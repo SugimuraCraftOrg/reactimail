@@ -1,5 +1,6 @@
 asgiref==3.8.1
 Django==5.1.2
+django-ratelimit==4.1.0
 Faker==30.8.2
 psycopg2-binary==2.9.10
 python-dateutil==2.9.0.post0

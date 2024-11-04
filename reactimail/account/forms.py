@@ -4,9 +4,18 @@ from django.contrib.auth import authenticate
 
 
 class EmailLoginForm(forms.Form):
-    email = forms.EmailField(label="Email", max_length=254, required=True)
+    email = forms.EmailField(
+        label="Email",
+        max_length=254,
+        required=True,
+        help_text="Enter the email address you registered with",
+    )
     password = forms.CharField(
-        label="Password", widget=forms.PasswordInput, required=True
+        label="Password",
+        widget=forms.PasswordInput,
+        required=True,
+        help_text="Enter your password (minimum 8 characters)",
+        error_messages={"min_length": "Password must be at least 8 characters long"},
     )
 
     def clean(self):
