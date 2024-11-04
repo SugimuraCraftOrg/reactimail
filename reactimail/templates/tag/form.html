@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{% if object %}Edit Tag{% else %}Add New Tag{% endif %}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if form.non_field_errors %}
+        <div class="error">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+    <button type="submit">{% if object %}Update Tag{% else %}Create Tag{% endif %}</button>
+</form>
+
+<a href="{% url 'tag:list' %}">Back to Tag List</a>
+
+{% endblock %}
