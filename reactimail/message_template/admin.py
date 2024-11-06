@@ -20,4 +20,4 @@ class MessageTemplateAdmin(admin.ModelAdmin):
     def tags_list(self, obj):
         return obj.tag_names
 
-    tags_list.short_desctipton = "Tags"  # type: ignore
+    tags_list.short_description = "Tags"  # type: ignore

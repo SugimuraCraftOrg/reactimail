@@ -27,6 +27,6 @@ class MessageTemplateForm(ModelForm):
             # For checking the parameter list
             self.cleaned_data["parameters"] = parameters
         except ValueError as e:
-            raise ValidationError(f"Template syntax error: {e}")
+            raise ValidationError(f"Template syntax error: {e}") from e
 
         return body
