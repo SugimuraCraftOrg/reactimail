@@ -20,3 +20,6 @@ class Tag(BaseModelMixin):
         ordering = ["name"]
         verbose_name = "Tag"
         verbose_name_plural = "Tags"
+
+    def __str__(self):
+        return self.name

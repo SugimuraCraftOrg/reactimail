@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ object.title }}</h2>
+<div>
+    <strong>Type:</strong> {{ object.get_type_display }}
+</div>
+<div><strong>Body:</strong>
+    <pre>{{ object.body }}</pre>
+</div>
+<div>
+    <strong>Body Parameters:</strong>
+    <ul>
+        {% for body_parameter in object.body_parameters %}
+        <li>{{ body_parameter }}</li>
+        {% endfor %}
+    </ul>
+</div>
+<div>
+    <strong>Tags:</strong> {{ object.tag_names }}
+</div>
+<a href="{% url 'message_template:edit' object.pk %}">Edit</a>
+<a href="{% url 'message_template:delete' object.pk %}">Delete</a>
+<a href="{% url 'message_template:list' %}">Back to List</a>
+{% endblock %}

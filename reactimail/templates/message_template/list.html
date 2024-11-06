@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Message Templates</h2>
+<a href="{% url 'message_template:add' %}">Add New Message Template</a>
+<ul>
+    {% for template in object_list %}
+    <li>
+        <a href="{% url 'message_template:detail' template.pk %}">{{ template.title }}</a>
+        <ul>
+            {% for body_parameter in template.body_parameters %}
+            <li>{{ body_parameter }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'message_template:edit' template.pk %}">Edit</a>
+        <a href="{% url 'message_template:delete' template.pk %}">Delete</a>
+    </li>
+    {% empty %}
+        <p>No message templates found.</p>
+    {% endfor %}
+</ul>
+{% endblock %}
