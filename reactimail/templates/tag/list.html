@@ -6,13 +6,13 @@
 
 <ul>
     {% for tag in object_list %}
-        <li>
-            <a href="{% url 'tag:detail' tag.id %}">{{ tag.name }}</a>
-            (<a href="{% url 'tag:edit' tag.id %}">Edit</a> |
-            <a href="{% url 'tag:delete' tag.id %}">Delete</a>)
-        </li>
+    <li>
+        <a href="{% url 'tag:detail' tag.id %}">{{ tag.name }}</a>
+        (<a href="{% url 'tag:edit' tag.id %}">Edit</a> |
+        <a href="{% url 'tag:delete' tag.id %}">Delete</a>)
+    </li>
     {% empty %}
-        <p>No tags available.</p>
+    <p>No tags found.</p>
     {% endfor %}
 </ul>
 

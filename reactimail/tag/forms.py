@@ -1,10 +1,8 @@
-# forms.py
-from django import forms
-from django.core.exceptions import ValidationError
+from django.forms import ModelForm, ValidationError
 from .models import Tag
 
 
-class TagForm(forms.ModelForm):
+class TagForm(ModelForm):
     class Meta:
         model = Tag
         fields = ["name"]
